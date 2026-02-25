@@ -43,6 +43,7 @@ const form = ref({
   usage_rate: 1.0,
   script_url: '',
   script_secret: '',
+  show_configs: true,
 })
 
 const open = computed({
@@ -71,6 +72,7 @@ watch(() => props.node, (node) => {
       usage_rate: node.usage_rate ?? 1.0,
       script_url: node.script_url ?? '',
       script_secret: node.script_secret ?? '',
+      show_configs: node.show_configs ?? true,
     }
   }
 }, { immediate: true })
@@ -91,6 +93,7 @@ async function handleUpdate() {
       usage_rate: form.value.usage_rate,
       script_url: form.value.script_url,
       script_secret: form.value.script_secret,
+      show_configs: form.value.show_configs,
     }
     
     await api.nodes.update(props.node.id, updateData)
@@ -348,6 +351,22 @@ const confirmMessages: Record<string, { title: string; description: string; vari
             v-model="form.script_secret"
             placeholder="my-secret"
             :disabled="isLoading"
+          />
+        </div>
+
+        <div
+          class="flex items-center justify-between border rounded-md px-4 py-3 cursor-pointer transition-colors hover:bg-muted/50"
+          :class="{ 'bg-primary/10 border-primary': form.show_configs }"
+          @click="form.show_configs = !form.show_configs"
+        >
+          <div>
+            <div class="text-sm font-medium">نمایش کانفیگ‌ها</div>
+            <div class="text-xs text-muted-foreground">کانفیگ‌های این نود برای کاربران نمایش داده شود</div>
+          </div>
+          <Icon
+            :name="form.show_configs ? 'i-lucide-toggle-right' : 'i-lucide-toggle-left'"
+            class="h-6 w-6"
+            :class="form.show_configs ? 'text-primary' : 'text-muted-foreground'"
           />
         </div>
       </div>

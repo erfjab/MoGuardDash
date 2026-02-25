@@ -25,11 +25,13 @@ export interface AdminCreate {
   count_limit?: number | null
   usage_limit?: number | null
   access_prefix?: string | null
+  access_tag?: string | null
   placeholders?: AdminPlaceHolder[] | null
   max_links?: number | null
   shuffle_links?: boolean | null
   access_title?: string | null
   access_description?: string | null
+  config_rename?: string | null
   telegram_id?: string | null
   telegram_token?: string | null
   telegram_logger_id?: string | null
@@ -187,6 +189,7 @@ export interface NodeCreate {
   usage_rate?: number
   script_url?: string | null
   script_secret?: string | null
+  show_configs?: boolean
 }
 
 export interface NodeResponse {
@@ -205,6 +208,7 @@ export interface NodeResponse {
   priority: number
   script_url: string | null
   script_secret: string | null
+  show_configs: boolean | null
   created_at: string
   updated_at: string
 }
@@ -226,6 +230,7 @@ export interface NodeUpdate {
   usage_rate?: number | null
   script_url?: string | null
   script_secret?: string | null
+  show_configs?: boolean | null
 }
 
 export interface ServiceCreate {
