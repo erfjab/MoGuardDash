@@ -66,7 +66,9 @@ const handleKeydown = (event: KeyboardEvent) => {
   <div class="flex min-h-screen items-center justify-center px-4">
     <div class="mx-auto flex w-full flex-col justify-center space-y-8 sm:w-[400px]">
       <div class="flex flex-col space-y-2 text-center">
-        <img src="/favicon.svg" alt="logo" class="mx-auto h-14 w-auto" />
+        <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10 text-primary">
+          <Icon name="i-lucide-layout-dashboard" class="h-8 w-8" />
+        </div>
         <h1 class="text-3xl font-bold tracking-tight">
           {{ t('login.title') }}
         </h1>
