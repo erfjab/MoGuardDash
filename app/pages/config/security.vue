@@ -159,8 +159,8 @@ const handleEnableTotp = async () => {
         // Fallback: Construct the URI manually if missing
         // We need the username for the label
         const username = admin.value?.username || 'Admin'
-        const label = encodeURIComponent(`GuardDash:${username}`)
-        const issuer = encodeURIComponent('GuardDash')
+        const label = encodeURIComponent(`Dashboard:${username}`)
+        const issuer = encodeURIComponent('Dashboard')
         const uri = `otpauth://totp/${label}?secret=${response.secret}&issuer=${issuer}`
         totpQrUrl.value = createQrCodeUrl(uri)
       }

@@ -520,7 +520,7 @@
         "subtitle": "مدیریت کلید API و مشاهده مستندات",
         "apiKey": "کلید API",
         "yourApiKey": "کلید API شما",
-        "apiKeyDescription": "از این کلید برای احراز هویت درخواست‌های خود به GuardCore API استفاده کنید. این کلید را محرمانه نگه دارید.",
+        "apiKeyDescription": "از این کلید برای احراز هویت درخواست‌های خود به API استفاده کنید. این کلید را محرمانه نگه دارید.",
         "revokeKey": "کلید جدید",
         "generateKey": "تولید کلید",
         "copyKey": "کپی کلید",
@@ -537,7 +537,7 @@
         "documentationDescription": "مستندات دسترسی به api های هسته‌ی گارد، برای ساخت و توسعه‌ی ابزارهای اختصاصی خود، میتوانید استفاده کنید.",
         "viewDocumentation": "مشاهده مستندات API",
         "pythonSdk": "Python SDK",
-        "pythonSdkDescription": "کتابخانه‌های رسمی پایتون برای یکپارچگی با GuardCore.",
+        "pythonSdkDescription": "کتابخانه‌های رسمی پایتون برای یکپارچگی با API.",
         "baseUrl": "آدرس پایه"
     },
     "faq": {
@@ -626,9 +626,9 @@
         "today": "امروز"
     },
     "appInfo": {
-        "title": "گارد",
+        "title": "داشبورد",
         "subtitle": "مدیریت اشتراک",
-        "description": "یک داشبورد قدرتمند برای مدیریت و نظارت بر سرویس‌های Guard Core"
+        "description": "یک داشبورد قدرتمند برای مدیریت و نظارت بر سرویس‌های شما"
     },
     "toolbox": {
         "quickActions": "عملیات سریع",

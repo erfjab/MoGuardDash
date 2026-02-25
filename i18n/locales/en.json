@@ -501,7 +501,7 @@
         "subtitle": "Manage your API key and view API documentation",
         "apiKey": "API Key",
         "yourApiKey": "Your API Key",
-        "apiKeyDescription": "Use this key to authenticate your requests to the GuardCore API. Keep this key secret.",
+        "apiKeyDescription": "Use this key to authenticate your requests to the API. Keep this key secret.",
         "revokeKey": "Revoke",
         "generateKey": "Generate Key",
         "copyKey": "Copy Key",
@@ -518,7 +518,7 @@
         "documentationDescription": "Explore the available API endpoints and their usage.",
         "viewDocumentation": "View API Documentation",
         "pythonSdk": "Python SDK",
-        "pythonSdkDescription": "Official Python libraries for integrating with GuardCore.",
+        "pythonSdkDescription": "Official Python libraries for integrating with the API.",
         "baseUrl": "Base URL"
     },
     "faq": {
@@ -607,9 +607,9 @@
         "today": "Today"
     },
     "appInfo": {
-        "title": "Guard",
+        "title": "Dashboard",
         "subtitle": "Subscription Manager",
-        "description": "A powerful admin dashboard for managing and monitoring Guard Core services"
+        "description": "A powerful admin dashboard for managing and monitoring your services"
     },
     "toolbox": {
         "quickActions": "Quick Actions",
