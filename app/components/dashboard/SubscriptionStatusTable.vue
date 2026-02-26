@@ -1,21 +1,22 @@
 <script setup lang="ts">
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
-import { computed, useAttrs, onMounted, ref, watch } from 'vue'
+import { computed, useAttrs, onMounted, ref } from 'vue'
 import { PieChart } from 'lucide-vue-next'
 import AnimatedNumber from './AnimatedNumber.vue'
+import type { SubscriptionStatusStatsResponse } from '~/types/api'
 
 defineOptions({ inheritAttrs: false })
 const attrs = useAttrs()
+const props = withDefaults(defineProps<{
+  statusStats?: SubscriptionStatusStatsResponse | null
+  statusState?: string
+}>(), {
+  statusStats: null,
+  statusState: 'success',
+})
 
 type StatusKey = 'active' | 'disabled' | 'expired' | 'limited' | 'pending'
-
-const { subscriptions } = useApi()
-const { data: statusStats, status } = useAsyncData(
-  'subscription-status-stats-table',
-  () => subscriptions.getSubscriptionStatusStats(),
-  { server: false, lazy: true }
-)
 
 const isMounted = ref(false)
 onMounted(() => {
@@ -25,18 +26,7 @@ onMounted(() => {
   }, 100)
 })
 
-const cachedStats = ref(statusStats.value)
-watch(
-  () => statusStats.value,
-  value => {
-    if (value) {
-      cachedStats.value = value
-    }
-  },
-  { immediate: true }
-)
-
-const statsData = computed(() => statusStats.value ?? cachedStats.value ?? null)
+const statsData = computed(() => props.statusStats ?? null)
 
 const total = computed(() => statsData.value?.total ?? 0)
 
@@ -70,8 +60,8 @@ const rows = computed(() => {
   }))
 })
 
-const isLoading = computed(() => status.value === 'pending' && !statsData.value)
-const hasError = computed(() => status.value === 'error' && !statsData.value)
+const isLoading = computed(() => props.statusState === 'pending' && !statsData.value)
+const hasError = computed(() => props.statusState === 'error' && !statsData.value)
 const isEmpty = computed(() => !isLoading.value && rows.value.every(row => row.value === 0))
 </script>
 
