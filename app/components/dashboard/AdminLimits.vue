@@ -6,18 +6,19 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { Database, Users, Infinity as InfinityIcon, Clock, Shield } from 'lucide-vue-next'
 import AnimatedNumber from './AnimatedNumber.vue'
 import { formatBytes } from '~/lib/api-helpers'
+import type { SubscriptionStatusStatsResponse } from '~/types/api'
 
-const api = useApi()
 const { admin } = useAdmin()
 const { t } = useI18n()
+const props = withDefaults(defineProps<{
+  statusStats?: SubscriptionStatusStatsResponse | null
+  statusState?: string
+}>(), {
+  statusStats: null,
+  statusState: 'success',
+})
 
-const { data: statusStats } = useAsyncData(
-  'subscription-status-stats-limits',
-  () => api.subscriptions.getSubscriptionStatusStats(),
-  { server: false, lazy: true }
-)
-
-const isLoading = computed(() => !admin.value || !statusStats.value)
+const isLoading = computed(() => !admin.value || !props.statusStats)
 
 const usageLimit = computed(() => admin.value?.usage_limit)
 const leftUsage = computed(() => admin.value?.left_usage)
@@ -82,7 +83,7 @@ const activeDurationData = computed(() => {
         </div>
         <template v-else>
           <div class="text-2xl font-bold">
-            <AnimatedNumber :value="statusStats?.total_usage || 0" :format-bytes="true" :duration="2500" />
+            <AnimatedNumber :value="props.statusStats?.total_usage || 0" :format-bytes="true" :duration="2500" />
           </div>
           <Badge v-if="role !== 'owner'" class="font-normal text-[0.65rem]">
             <span v-if="!isUsageUnlimited">
@@ -111,7 +112,7 @@ const activeDurationData = computed(() => {
         </div>
         <template v-else>
           <div class="text-2xl font-bold">
-            <AnimatedNumber :value="statusStats?.total || 0" :duration="2500" />
+            <AnimatedNumber :value="props.statusStats?.total || 0" :duration="2500" />
           </div>
           <Badge v-if="role !== 'owner'" class="font-normal text-[0.65rem]">
             <span v-if="!isCountUnlimited">
@@ -138,7 +139,7 @@ const activeDurationData = computed(() => {
           <Skeleton class="h-8 w-32" />
         </div>
         <div v-else class="text-2xl font-bold capitalize">
-          <AnimatedNumber :value="statusStats?.last_24h_usage || 0" :format-bytes="true" :duration="2500" />
+          <AnimatedNumber :value="props.statusStats?.last_24h_usage || 0" :format-bytes="true" :duration="2500" />
         </div>
       </CardContent>
     </Card>
@@ -156,7 +157,7 @@ const activeDurationData = computed(() => {
           <Skeleton class="h-8 w-20" />
         </div>
         <div v-else class="text-2xl font-bold capitalize">
-          <AnimatedNumber :value="statusStats?.last_24h_online || 0" :duration="2500" />
+          <AnimatedNumber :value="props.statusStats?.last_24h_online || 0" :duration="2500" />
         </div>
       </CardContent>
     </Card>

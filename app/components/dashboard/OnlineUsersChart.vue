@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { Users } from 'lucide-vue-next'
 import AnimatedNumber from './AnimatedNumber.vue'
+import type { SubscriptionStatusStatsResponse } from '~/types/api'
 
-const { subscriptions } = useApi()
-const { data: statusStats, status } = useAsyncData(
-  'subscription-status-stats-online',
-  () => subscriptions.getSubscriptionStatusStats(),
-  { server: false, lazy: true }
-)
+const props = withDefaults(defineProps<{
+  statusStats?: SubscriptionStatusStatsResponse | null
+  statusState?: string
+}>(), {
+  statusStats: null,
+  statusState: 'success',
+})
 
 const isMounted = ref(false)
 onMounted(() => {
@@ -19,18 +21,7 @@ onMounted(() => {
   }, 100)
 })
 
-const cachedStats = ref(statusStats.value)
-watch(
-  () => statusStats.value,
-  value => {
-    if (value) {
-      cachedStats.value = value
-    }
-  },
-  { immediate: true }
-)
-
-const statsData = computed(() => statusStats.value ?? cachedStats.value ?? null)
+const statsData = computed(() => props.statusStats ?? null)
 
 const total = computed(() => statsData.value?.total ?? 0)
 const online = computed(() => statsData.value?.online ?? 0)
@@ -44,8 +35,8 @@ const percentage = computed(() => {
   return (online.value / total.value) * 100
 })
 
-const isLoading = computed(() => status.value === 'pending' && !statsData.value)
-const hasError = computed(() => status.value === 'error' && !statsData.value)
+const isLoading = computed(() => props.statusState === 'pending' && !statsData.value)
+const hasError = computed(() => props.statusState === 'error' && !statsData.value)
 
 const accentStart = 'var(--chart-2, #8b5cf6)'
 const accentEnd = 'var(--chart-4, #6d28d9)'

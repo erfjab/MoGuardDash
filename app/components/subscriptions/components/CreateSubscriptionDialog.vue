@@ -21,7 +21,7 @@ const extraOpen = ref(false)
 
 const form = ref({
   username: '',
-  limit_usage_gb: 20,
+  limit_usage_gb: 0.1,
   limit_expire: 30,
   expire_on_first_connect: false,
   auto_delete_days: 0,
@@ -76,11 +76,11 @@ const errors = computed(() => {
     start_number: ''
   }
 
-  if (form.value.limit_usage_gb < 20) {
-    e.limit_usage_gb = 'حداقل میزان حجم ۲۰ گیگابایت است'
+  if (form.value.limit_usage_gb < 0) {
+    e.limit_usage_gb = 'میزان حجم نمی‌تواند منفی باشد'
   }
 
-  if (form.value.limit_expire === '' || form.value.limit_expire === null || form.value.limit_expire === undefined) {
+  if (form.value.limit_expire === null || form.value.limit_expire === undefined || Number.isNaN(form.value.limit_expire)) {
     e.limit_expire = 'لطفاً زمان را وارد کنید'
   } else if (form.value.limit_expire < 0) {
     e.limit_expire = 'محدودیت زمان نمی‌تواند منفی باشد'
@@ -106,7 +106,7 @@ const errors = computed(() => {
 function resetForm() {
   form.value = {
     username: '',
-    limit_usage_gb: 20,
+    limit_usage_gb: 0.1,
     limit_expire: 30,
     expire_on_first_connect: false,
     auto_delete_days: 0,
@@ -275,15 +275,15 @@ async function handleCreate() {
             v-model.number="form.limit_usage_gb"
             type="number"
             step="0.1"
-            min="20"
+            min="0"
             :disabled="isLoading"
             class="flex-1"
             :class="{ 'border-red-500 focus-visible:ring-red-500': errors.limit_usage_gb }"
-            placeholder="حداقل ۲۰"
+            placeholder="مثلاً 0.1"
           />
           <div class="flex items-center justify-between">
             <div class="text-xs" :class="errors.limit_usage_gb ? 'text-red-500' : 'text-muted-foreground'">
-              {{ errors.limit_usage_gb || 'حداقل ۲۰ گیگابایت' }}
+              {{ errors.limit_usage_gb || 'حجم دلخواه (گیگابایت)' }}
             </div>
             <div class="flex gap-1">
               <Button
